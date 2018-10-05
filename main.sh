@@ -37,7 +37,7 @@ LOCALE=C join -1 2 -2 1 -o1.1,1.2,1.3,2.1,2.2 chr${chr}_${resolution}.txt gpseq.
 parallel "sed -i.bak 's/\t/_/' {}" ::: gpseq.${resolution}.chr${chr}.bincount/${name}.${resolution}.chr${chr}.bincount.join-{1,2}
 parallel "LOCALE=C sort -k1,1 -o {} {}" ::: gpseq.${resolution}.chr${chr}.bincount/${name}.${resolution}.chr${chr}.bincount.join-{1,2}
 LOCALE=C join gpseq.${resolution}.chr${chr}.bincount/${name}.${resolution}.chr${chr}.bincount.join-{1,2} |
-    awk '{print $3,$6,$2,$4,$7,log($2/($4*$7))}' | tr ' ' '\t' > gpseq.${resolution}.chr${chr}.bincount/${name}.${resolution}.chr${chr}.dat # joined gpseq and hic 
+    awk -v res=${res} '{print $3/res,$6/res,$2,$4,$7,log($2/($4*$7))}' | tr ' ' '\t' > gpseq.${resolution}.chr${chr}.bincount/${name}.${resolution}.chr${chr}.dat # joined gpseq and hic 
 
 echo Cleaning ...
 rm gpseq.${resolution}.chr${chr}.bincount/*bincount*
