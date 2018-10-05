@@ -8,6 +8,7 @@ resolution=$2              # 1M or 100K
 gpseq=$3		   # the gpseq bed file in the gpseq directory: ~/Work/dataset/gpseq+Hic/gpseq/BICRO48_TK77_10min_GG__cutsiteLoc-umiCount.transCorrected.bed
 chr=$4			   # the chromosome: 1, 2, ...
 hicfile=$5		   # fullpath to hic file
+hictype=$6		   # observed or oe (see juicer)
 
 name=`echo ${gpseq}|rev|cut -d'/' -f1|rev`
 present=$PWD
@@ -19,7 +20,7 @@ mkdir -p gpseq.${resolution}.chr${chr}.bincount
 echo "Intersect HiC and GPseq dataset: 4DNFI1E6NJQJ.hic and ${name} ..."
 
 res=`numfmt --from=si ${resolution}`
-java -jar ~/tools/juicer/scripts/juicer_tools.jar dump observed KR ${hicfile} ${chr} ${chr} BP ${res} chr${chr}_${resolution}.txt # generate observed HiC matrix (normalized)
+java -jar ~/tools/juicer/scripts/juicer_tools.jar dump ${hictype} KR ${hicfile} ${chr} ${chr} BP ${res} chr${chr}_${resolution}.txt # generate observed HiC matrix (normalized)
 bash ~/Work/pipelines/aux.scripts/make-windows.sh ${res} hg19 > hg19.binned.${resolution}.bed # bin the genome
 
 bedtools intersect -a hg19.binned.${resolution}.bed -b ${gpseq} -wa -wb | grep -w ^chr${chr} |
