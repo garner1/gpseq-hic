@@ -7,10 +7,10 @@ echo Tag the interactions counts obtained from Jucier with the discretized centr
 rm -f inter.none.observed/*sorted*
 rm -f ~/Work/dataset/gpseq+hic/tagged_with_centrality/*sorted*
 echo bc58
-parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/inter.none.observed/chr{1}-chr{2}.inter.observed.none.txt 58" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
+parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/hic.none.observed/chr{1}-chr{2}.inter.observed.none.txt 58" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
 echo bc52
-parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/inter.none.observed/chr{1}-chr{2}.inter.observed.none.txt 52" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
+parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/hic.none.observed/chr{1}-chr{2}.inter.observed.none.txt 52" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
 echo bc48
-parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/inter.none.observed/chr{1}-chr{2}.inter.observed.none.txt 48" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
+parallel "bash tag_interactions.sh /home/garner1/Work/dataset/gpseq+hic/hic.none.observed/chr{1}-chr{2}.inter.observed.none.txt 48" ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X ::: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 X
 
 rm ~/Work/dataset/gpseq+hic/tagged_with_centrality/*sorted*

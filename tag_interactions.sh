@@ -19,9 +19,9 @@ centralityJ=/home/garner1/Work/dataset/gpseq+hic/tagged_with_centrality/${chrJ}.
 [ -f ${interactions} ] && [ ! -f ${interactions}.sortedK2 ] && cat ${interactions} | awk '{print $1/1000000,$2/1000000,$3}' | tr ' ' '\t' |  sort -k2,2 > ${interactions}.sortedK2
 [ ! -f ${centralityI}.sorted ] && cat ${centralityI} | tr ' ' '\t' |  sort -k1,1 > ${centralityI}.sorted
 [ ! -f ${centralityJ}.sorted ] && cat ${centralityJ} | tr ' ' '\t' |  sort -k1,1 > ${centralityJ}.sorted
-[ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2 ${interactions}.sortedK1 ${centralityI}.sorted | awk '{print $1"_"$2,$3,$4}' | tr ' ' '\t' | sort > ${interactions}.sortedK1.joinedI
-[ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2 -1 2 -2 1 ${interactions}.sortedK2 ${centralityJ}.sorted | awk '{print $1"_"$2,$3,$4}' | tr ' ' '\t' | sort > ${interactions}.sortedK2.joinedJ
-[ -f ${interactions} ] && join ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ | tr '_ ' '\t\t' | cut -f-4,6 > ${interactions}.bc${run}.tsv
+[ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2,2.3 ${interactions}.sortedK1 ${centralityI}.sorted | awk '{print $1"_"$2,$3,$4,$5}' | tr ' ' '\t' | sort > ${interactions}.sortedK1.joinedI
+[ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2,2.3 -1 2 -2 1 ${interactions}.sortedK2 ${centralityJ}.sorted | awk '{print $1"_"$2,$3,$4,$5}' | tr ' ' '\t' | sort > ${interactions}.sortedK2.joinedJ
+[ -f ${interactions} ] && join ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ | tr '_ ' '\t\t' | cut -f-5,7- > ${interactions}.bc${run}.tsv
 
 [ -f ${interactions} ] && rm -f ${interactions}.sortedK1 ${interactions}.sortedK2 ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ
 
