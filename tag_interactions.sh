@@ -7,22 +7,27 @@
 
 export LC_ALL=C
 
-interactions=$1			# inter.none.observed/chr10-chr11.inter.observed.none.txt
+interactions=$1			# hic.1M.none.observed/chr10-chr11.1M.inter.observed.none.txt
 run=$2				# 48/52/58
+
+[ ! -f ${interactions} ] && echo HiC file ${interactions} does not exists!
 
 chrI=`echo $interactions | rev | cut -d'/' -f1|rev|cut -d'.' -f1|cut -d'-' -f1`
 chrJ=`echo $interactions | rev | cut -d'/' -f1|rev|cut -d'.' -f1|cut -d'-' -f2`
 
 centralityI=/home/garner1/Work/dataset/gpseq+hic/tagged_with_centrality/${chrI}.bc${run} 
 centralityJ=/home/garner1/Work/dataset/gpseq+hic/tagged_with_centrality/${chrJ}.bc${run}
+
+[ ! -f ${centralityI} ] && echo GPseq I-file does not exists!
+[ ! -f ${centralityJ} ] && echo GPseq J-file does not exists!
+
 [ -f ${interactions} ] && [ ! -f ${interactions}.sortedK1 ] && cat ${interactions} | awk '{print $1/1000000,$2/1000000,$3}' | tr ' ' '\t' |  sort -k1,1 > ${interactions}.sortedK1
 [ -f ${interactions} ] && [ ! -f ${interactions}.sortedK2 ] && cat ${interactions} | awk '{print $1/1000000,$2/1000000,$3}' | tr ' ' '\t' |  sort -k2,2 > ${interactions}.sortedK2
 [ ! -f ${centralityI}.sorted ] && cat ${centralityI} | tr ' ' '\t' |  sort -k1,1 > ${centralityI}.sorted
 [ ! -f ${centralityJ}.sorted ] && cat ${centralityJ} | tr ' ' '\t' |  sort -k1,1 > ${centralityJ}.sorted
 [ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2,2.3 ${interactions}.sortedK1 ${centralityI}.sorted | awk '{print $1"_"$2,$3,$4,$5}' | tr ' ' '\t' | sort > ${interactions}.sortedK1.joinedI
 [ -f ${interactions} ] && join -o1.1,1.2,1.3,2.2,2.3 -1 2 -2 1 ${interactions}.sortedK2 ${centralityJ}.sorted | awk '{print $1"_"$2,$3,$4,$5}' | tr ' ' '\t' | sort > ${interactions}.sortedK2.joinedJ
-[ -f ${interactions} ] && join ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ | tr '_ ' '\t\t' | cut -f-5,7- > ${interactions}.bc${run}.tsv
-
+[ -f ${interactions} ] && join ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ | tr '_ ' '\t\t' | cut -f-5,7- | tr ',' '.' > ${interactions}.bc${run}.tsv
 [ -f ${interactions} ] && rm -f ${interactions}.sortedK1 ${interactions}.sortedK2 ${interactions}.sortedK1.joinedI ${interactions}.sortedK2.joinedJ
 
 mkdir -p /home/garner1/Work/dataset/gpseq+hic/bc${run}
